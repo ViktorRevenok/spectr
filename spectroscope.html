@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>INVESTIGATION OF THE EMISSION SPECTRA USING A SPECTROSCOPE</title>
+	<link rel="stylesheet" type="text/css" href="spectroscope_style.css">
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+	<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+	<script>
+		var linearValue = 1;
+		var circularValue = 0;
+		$(function () {
+			$("#slider_linear").slider({
+				min: 1,
+				max: 6,
+				value: 1,
+				slide: function (event, ui) {
+					$("#count_linear").val(ui.value);
+					linearValue = ui.value;
+					addLines(ui.value);
+				}
+			});
+		});
+
+		$(function () {
+			$("#slider_circular").slider({
+				min: 0,
+				max: 50,
+				value: 0,
+				slide: function (event, ui) {
+					$("#count_circular").val(ui.value);
+					circularValue = ui.value;
+					addLines(ui.value);
+				}
+			});
+		});
+		function addLines(value) {
+			let temp = ((linearValue * 100 + circularValue * 2) - 100) / 6;
+			$(".blockfortwopixels").css("left", `${temp}%`)
+		}
+	</script>
+</head>
+
+<body>
+	<header>
+		<h1 id="titleText">INVESTIGATION OF THE EMISSION SPECTRA USING A SPECTROSCOPE</h1>
+	</header>
+	<div class="main column">
+		<div class="container column">
+			<div class="language block row">
+				<p>English</p>
+				<label class="switch">
+					<input id="language_switch" type="checkbox">
+					<span class="switch_slider round"></span>
+				</label>
+				<p>Українська</p>
+			</div>
+			<div class="imgs block row">
+				<img src="spectroscope_1.jpg">
+				<img src="spectroscope_2.jpg">
+			</div>
+			<div class="graff__gas block column">
+				<div id="select_gas" class="select_gas column">
+					<p id="select_gasText">Select gas:</p>
+					<select>
+						<option id="neonText" value="neon" selected>Neon</option>
+						<option id="hydrogenText" value="hydrogen">Hydrogen</option>
+					</select>
+				</div>
+				<div class="graff__imgs row">
+					<img class="light" src="with-bulb.552f66c0.gif">
+					<img id="eye" class="eye" src="eye_neon.jpg">
+				</div>
+			</div>
+			<div class="graff__scale block column">
+				<div class="graff__scales column">
+					<div class="graff__scale_value row">
+						<p id="linear_scaleText">Linear scale:</p>
+						<div class="scale_block row">
+							<div class="slider">
+								<div id="slider_linear">
+									<div class="subtitle_start">1</div>
+									<div class="subtitle_end">6</div>
+								</div>
+							</div>
+							<input value="0" id="count_linear" class="count" readonly></input>
+						</div>
+					</div>
+					<div class="horizontal_line"></div>
+					<div class="graff__scale_value row">
+						<p id="circular_scaleText">Circular scale:</p>
+						<div class="scale_block row">
+							<div class="slider">
+								<div id="slider_circular">
+									<div class="subtitle_start">0</div>
+									<div class="subtitle_end">50</div>
+								</div>
+							</div>
+							<input value="0" id="count_circular" class="count" readonly></input>
+						</div>
+					</div>
+				</div>
+				<div class="indicator column">
+					<div class="indicator__hr_line">
+						<div class="blockfortwopixels">
+							<div class="indicator__arrow">
+								<div class="triangle"></div>
+							</div>
+						</div>
+					</div>
+					<img id="indicator__img" class="indicator__img" src="spectrum_neon.jpg">
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	$("#select_gas").on("change", (e) => {
+		if (e.target.value == "neon") {
+			$("#eye").attr("src", "eye_neon.jpg");
+			$("#indicator__img").attr("src", "spectrum_neon.jpg");
+		}
+		if (e.target.value == "hydrogen") {
+			$("#eye").attr("src", "eye_hydrogen.jpg");
+			$("#indicator__img").attr("src", "spectrum_hydrogen.jpg");
+		}
+	});
+
+	$("#language_switch").on("change", (e) => {
+		if ($("#language_switch").prop('checked')) {
+			titleText.innerText = "ДОСЛІДЖЕННЯ СПЕКТРІВ ВИПРОМІНЮВАННЯ З ДОПОМОГОЮ СПЕКТРОСКОПА";
+			select_gasText.innerText = "Обрати газ:";
+			neonText.innerText = "Неон";
+			hydrogenText.innerText = "Гідроген";
+			linear_scaleText.innerText = "Лінійна шкала:";
+			circular_scaleText.innerText = "Кругова шкала:";
+		}
+		if (!($("#language_switch").prop('checked'))) {
+			titleText.innerText = "INVESTIGATION OF THE EMISSION SPECTRA USING A SPECTROSCOPE";
+			select_gasText.innerText = "Select gas:";
+			neonText.innerText = "Neon";
+			hydrogenText.innerText = "Hydrogen";
+			linear_scaleText.innerText = "Linear scale:";
+			circular_scaleText.innerText = "Circular scale:";
+		}
+	})
+</script>
+
+</html>
